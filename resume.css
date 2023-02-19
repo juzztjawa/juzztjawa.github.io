@@ -1,8 +1,9 @@
 body {
     font-family: 'Ubuntu';
     font-size: 22px;
-    background-color: #083245;
-    /* background-image: url("bgimage.jpeg"); */
+    /* background-color: #083245; */
+    background: url("bgimage2.jpeg")  no-repeat center center fixed;
+    background-size: cover;
     color:whitesmoke;
     margin:0% ;
     margin-left: 0%;
@@ -10,6 +11,34 @@ body {
     line-height: 40px;
     /* padding-left: 20px; */
 }
+header {
+    background-color:#010542;
+    color: #ffffff;
+    flex-wrap: wrap;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    line-height: 1;
+  }
+  nav ul {
+    
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  nav ul,li {
+    margin-left: 1rem;
+  }
+  nav ul,nav li,nav a {
+    float:right;
+    padding: 0.5rem;
+    text-decoration: none;
+    font-size: 20px;
+    border-radius: 5px;
+  }
+  
 img{
     float:right;
     width:18%;
@@ -26,6 +55,8 @@ img:hover{
     font-weight: normal;
     width:100%;
     padding-bottom: 60px;
+}
+.startingdiv h2,h3{
     padding-left: 20px;
 }
 div h2{
@@ -64,3 +95,49 @@ a{
 .Skills{
     padding-left: 20px;
 }
+.Projects{
+    padding-left: 20px;
+}
+.Projects dd {
+    opacity: 0.0;
+    transition: opacity 1s ease-in-out;
+    -moz-transition: opacity 1s ease-in-out;
+    -webkit-transition: opacity 1s ease-in-out;
+}
+.Projects li:hover + dd {
+    opacity: 1.0;
+    transition: opacity .55s ease-in-out;
+    -moz-transition: opacity .55s ease-in-out;
+    -webkit-transition: opacity .55s ease-in-out;
+}
+.activities{
+    padding-left: 20px;
+}
+.activities dl{
+    padding-left: 20px;
+}
+.activities ul{
+    padding-left: 80px;
+    opacity: 0.0;
+    transition: opacity 1s ease-in-out;
+    -moz-transition: opacity 1s ease-in-out;
+    -webkit-transition: opacity 1s ease-in-out;
+}
+.activities dd:hover + ul {
+    opacity: 1.0;
+    transition: opacity .55s ease-in-out;
+    -moz-transition: opacity .55s ease-in-out;
+    -webkit-transition: opacity .55s ease-in-out;
+}
+.languages{
+    padding-left: 20px;
+}
+.languages dl{
+    padding-left: 20px;
+}
+footer {
+    background-color: #010542;
+    padding: 1rem;
+    text-align: center;
+    color:#ffffff;
+  }
