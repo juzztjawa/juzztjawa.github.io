@@ -1,0 +1,54 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Autonomous Pick-and-Place System - JawaDev</title><meta name="description" content="A real-time autonomous system that performs object detection, 3D localization, and orientation estimation to enable robotic pick-and-place tasks."><meta name="author" content="Jawahar A S"><link rel="alternate" type="application/rss+xml" href="/rss.xml"><link rel="icon" type="image/x-icon" href="/favicon.svg"><link rel="stylesheet" href="/_astro/index.B61GjZQz.css" /></head> <body class="bg-slate-900 text-gray-100"> <div class="mx-auto max-w-screen-lg px-3 py-6"><div class="flex flex-col gap-y-3 sm:flex-row sm:items-center sm:justify-between"><a href="/"><div class="flex items-center bg-gradient-to-br from-sky-500 to-cyan-400 bg-clip-text text-xl font-bold text-transparent"><svg class="mr-1 h-10 w-10 stroke-cyan-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M0 0h24v24H0z" stroke="none"></path><rect x="3" y="12" width="6" height="8" rx="1"></rect><rect x="9" y="8" width="6" height="12" rx="1"></rect><rect x="15" y="4" width="6" height="16" rx="1"></rect><path d="M4 20h14"></path></svg>Jawahar&#x27;s Portfolio</div></a><nav><ul class="flex gap-x-3 font-medium text-gray-200"><li class="hover:text-white"><a href="/posts/" target="_self">Blogs</a></li><li class="hover:text-white"><a href="https://github.com/juzztjawa" target="_self">GitHub</a></li><li class="hover:text-white"><a href="https://www.linkedin.com/in/jawahar-a-s-198084252/" target="_self">LinkedIn</a></li></ul></nav></div></div>  <div class="px-3 py-8"> <div class="mx-auto max-w-screen-xl"> <div class="mb-5 text-center"> <h1 class="text-4xl font-bold">Autonomous Pick-and-Place System</h1> <div class="mt-2 text-gray-400">
+By Jawahar A S on 23/10/2023 </div> <div class="mt-4 flex justify-center gap-2"> <div class="rounded-md px-2 py-1 text-xs font-semibold bg-fuchsia-400 text-fuchsia-900">Python</div><div class="rounded-md px-2 py-1 text-xs font-semibold bg-fuchsia-400 text-fuchsia-900">SAM</div><div class="rounded-md px-2 py-1 text-xs font-semibold bg-fuchsia-400 text-fuchsia-900">OpenCV</div> </div> </div> <!-- The automatic image tag that was here has been removed. --> <!--
+        This div now wraps your Markdown content (<slot />) and uses the EXACT
+        same styling classes as your BlogPost.tsx for 100% consistency.
+      --> <div class="prose prose-invert mt-8 max-w-none prose-img:rounded-lg prose-img:mx-auto prose-img:max-w-4xl prose-figcaption:text-center prose-figcaption:italic prose-figcaption:text-slate-400"> <figure>
+  <img src="/assets/images/project3/preview.png" alt="Preview">
+  <figcaption>Preview</figcaption>
+</figure>
+<p>A real-time autonomous system that performs object detection, 3D localization, and orientation estimation to enable robotic pick-and-place tasks. Leveraging Intel RealSense D435i depth data and Meta’s Segment Anything Model (SAM), this module enables accurate object segmentation and spatial understanding — suitable for robotic manipulation in industrial and research settings.</p>
+<p>This module was developed as part of a larger robotics solution submitted to <strong>GRID 2023 Hackathon</strong>, where a team of five collaborated on building a complete autonomous robotic workflow. The section described here focuses on the <strong>perception and localization</strong> components.</p>
+<h2 id="-purpose">🎯 Purpose</h2>
+<p>Built as a submission for the <strong>GRID 2023 Hackathon</strong>, this project demonstrates how modern computer vision techniques can be integrated with depth sensing for precise robotic pick-and-place tasks.</p>
+<h2 id="-features">🔧 Features</h2>
+<ul>
+<li>Real-time object segmentation using Meta’s SAM (Segment Anything Model)</li>
+<li>3D localization of object centers from RGB + depth data (Intel RealSense D435i)</li>
+<li>Object orientation estimation using Principal Component Analysis (PCA)</li>
+<li>Robot approach direction computed using rotation matrices</li>
+<li>Live visualization of:
+<ul>
+<li>Annotated RGB frame with object coordinates and orientation</li>
+<li>Segmentation overlays and contour masks</li>
+<li>Colorized depth map</li>
+</ul>
+</li>
+<li>Real-time console logs:
+<ul>
+<li>3D world coordinates</li>
+<li>Orientation quaternion</li>
+<li>Approach vector for manipulation</li>
+</ul>
+</li>
+</ul>
+<h2 id="️-tech-stack">🛠️ Tech Stack</h2>
+<p>Python, OpenCV, NumPy, Intel RealSense SDK 2.0, Segment Anything Model (SAM)</p>
+<h2 id="team">Team</h2>
+<p>Team of 5<br>
+I contributed to the software module, focusing on:</p>
+<ul>
+<li>Integrating the Intel RealSense D435i camera for RGB + depth capture</li>
+<li>Implementing real-time object segmentation using SAM</li>
+</ul>
+<h2 id="learning-outcome">Learning Outcome</h2>
+<ul>
+<li>Practical application of SAM in real-time object segmentation</li>
+<li>Depth camera integration and world coordinate computation</li>
+<li>Understanding PCA for object orientation estimation</li>
+<li>Rotation matrix and quaternion usage in robotics</li>
+<li>Collaborative development in a hackathon setting</li>
+</ul>
+<h2 id="demo">Demo</h2>
+<iframe width="100%" height="400" src="https://www.youtube.com/embed/uv9TCsMKBBM" title="Autonomous Pick and Place Robot Demo" frameborder="0" allowfullscreen></iframe>
+<h2 id="github">GitHub</h2>
+<p><a href="https://github.com/juzztjawa/Autonomous-pick-and-place">GitHub Repository</a></p> </div> </div> </div>  <div class="mx-auto max-w-screen-lg px-3 py-6"><div class="border-t border-gray-600 pt-5"><div class="text-sm text-gray-200">© Copyright <!-- -->2025<!-- --> by <!-- -->JawaDev<!-- -->. Built with ♥ by<!-- --> <a class="text-cyan-400 hover:underline" href="https://creativedesignsguru.com" target="_blank" rel="noopener noreferrer">CreativeDesignsGuru</a>.</div></div></div> </body></html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Your AI DJ- How I Built a Spotify Agent Using MCP - JawaDev</title><meta name="description" content="What if you could simply type “Play my chill playlist” — and your AI assistant actually controls Spotify to make it happen?"><meta name="author" content="Jawahar A S"><link rel="alternate" type="application/rss+xml" href="/rss.xml"><link rel="icon" type="image/x-icon" href="/favicon.svg"><link rel="stylesheet" href="/_astro/index.B61GjZQz.css" /></head> <body class="bg-slate-900 text-gray-100"> <div class="mx-auto max-w-screen-lg px-3 py-6"><div class="flex flex-col gap-y-3 sm:flex-row sm:items-center sm:justify-between"><a href="/"><div class="flex items-center bg-gradient-to-br from-sky-500 to-cyan-400 bg-clip-text text-xl font-bold text-transparent"><svg class="mr-1 h-10 w-10 stroke-cyan-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M0 0h24v24H0z" stroke="none"></path><rect x="3" y="12" width="6" height="8" rx="1"></rect><rect x="9" y="8" width="6" height="12" rx="1"></rect><rect x="15" y="4" width="6" height="16" rx="1"></rect><path d="M4 20h14"></path></svg>Jawahar&#x27;s Portfolio</div></a><nav><ul class="flex gap-x-3 font-medium text-gray-200"><li class="hover:text-white"><a href="/posts/" target="_self">Blogs</a></li><li class="hover:text-white"><a href="https://github.com/juzztjawa" target="_self">GitHub</a></li><li class="hover:text-white"><a href="https://www.linkedin.com/in/jawahar-a-s-198084252/" target="_self">LinkedIn</a></li></ul></nav></div></div>  <div class="mx-auto max-w-screen-lg px-3 py-6"><h1 class="text-center text-3xl font-bold">Your AI DJ- How I Built a Spotify Agent Using MCP</h1><div class="mt-2 text-center text-sm text-gray-400">By <!-- -->Jawahar A S<!-- --> on<!-- --> <!-- -->Jul 21, 2025</div><div class="prose prose-invert mt-8 max-w-none prose-figcaption:text-center prose-figcaption:italic prose-figcaption:text-slate-400 prose-img:mx-auto prose-img:max-w-4xl prose-img:rounded-lg"> <figure>
+  <img src="/assets/images/blog2/Spotify-Logo.jpg" alt="Spotify">
+  <figcaption>Spotify Logo</figcaption>
+</figure>
+<blockquote>
+<p>What if you could simply type “Play my chill playlist” — and your AI assistant actually controls Spotify to make it happen?</p>
+</blockquote>
+<h2 id="motivation">Motivation</h2>
+<p>I’ve always loved Spotify — not just the music, but also the power it gives users to organize and personalize their music taste. But I’ve also got <em>huge playlists</em> that I never get around to organizing, and I thought: why not let an AI help me with that?</p>
+<p>That’s when I came across <strong>Model Context Protocol (MCP)</strong> — an open protocol that lets LLMs securely talk to tools and services. I decided to build a <strong>Spotify Agent</strong> where an LLM could take natural language commands and control my Spotify account: play songs, create playlists, get track info, and more.</p>
+<h2 id="what-is-mcp">What is MCP?</h2>
+<p>MCP (Model Context Protocol) is like <strong>USB-C for LLMs</strong> — a standard way for language models to interact with different tools, APIs, and data sources.</p>
+<figure>
+  <img src="/assets/images/blog2/mcp.png" alt="MCP">
+  <figcaption>Overview of how MCP works</figcaption>
+</figure>
+<p>At the heart of this setup:</p>
+<ul>
+<li><strong>MCP Hosts</strong> (e.g., Claude, IDEs, or AI agents) send requests</li>
+<li><strong>MCP Servers</strong> expose capabilities (like controlling Spotify) using a standardized protocol</li>
+<li>These servers can connect to <strong>local</strong> or <strong>remote</strong> services (like Spotify’s Web API)</li>
+</ul>
+<p>This makes it easy to build agents that talk to complex services without writing glue code from scratch.</p>
+<h2 id="what-the-agent-can-do">What the Agent Can Do</h2>
+<p>The Spotify agent lets you control playback, manage playlists, and fetch song metadata — all by typing natural language commands into a web-based chat interface (built with Streamlit).</p>
+<p>Here are some examples of what you can do:</p>
+<ul>
+<li><strong>“Pause the music”</strong> → Pauses current playback</li>
+<li><strong>“Play my chill playlist”</strong> → Finds a playlist you created and starts playing it</li>
+<li><strong>“Add Blinding Lights to Gym Mix”</strong> → Searches and adds the song to the specified playlist</li>
+<li><strong>“Create a playlist called Vibes”</strong> → Creates a new playlist in your account</li>
+<li><strong>“What’s playing right now?”</strong> → Displays current track info</li>
+<li><strong>“Play Blinding Lights from my Workout playlist”</strong> → Queues the playlist, adds the song again, and skips to it</li>
+</ul>
+<p>The agent also handles vague or ambiguous prompts by asking follow-up questions, confirming actions before execution, and prioritizing playlists owned by you.</p>
+<p>This gives the LLM a tool-augmented workflow that feels more like an intelligent assistant than just a chatbot.</p>
+<h3 id="behind-the-scenes">Behind the scenes:</h3>
+<ol>
+<li>User gives a prompt via a Streamlit chat interface</li>
+<li>LLM interprets intent → sends a call to the MCP server</li>
+<li>MCP Server communicates with Spotify’s Web API</li>
+<li>Agent handles the request and returns a response</li>
+</ol>
+<h2 id="setup-flow">Setup Flow</h2>
+<ol>
+<li>
+<p><strong>Clone My Spotify Agent</strong></p>
+<p>Start by cloning the main project repository and installing its dependencies.</p>
+<pre class="astro-code monokai" style="background-color:#272822;color:#F8F8F2; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color:#A6E22E">git</span><span style="color:#E6DB74"> clone</span><span style="color:#E6DB74"> https://github.com/juzztjawa/spotify-agent.git</span></span>
+<span class="line"><span style="color:#66D9EF">cd</span><span style="color:#E6DB74"> spotify-agent</span></span>
+<span class="line"><span style="color:#A6E22E">pip</span><span style="color:#E6DB74"> install</span><span style="color:#AE81FF"> -r</span><span style="color:#E6DB74"> requirements.txt</span></span></code></pre>
+</li>
+<li>
+<p><strong>Get Spotify API Keys</strong></p>
+<ul>
+<li>Set up a Spotify Developer app</li>
+<li>Redirect URI: <code>http://127.0.0.1:8080/callback</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Run the Spotify MCP Server (Only for First Time)</strong>
+From inside the cloned repo directory:</p>
+<pre class="astro-code monokai" style="background-color:#272822;color:#F8F8F2; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color:#A6E22E">git</span><span style="color:#E6DB74"> clone</span><span style="color:#E6DB74"> https://github.com/varunneal/spotify-mcp.git</span></span>
+<span class="line"><span style="color:#66D9EF">cd</span><span style="color:#E6DB74"> spotify-mcp</span></span>
+<span class="line"><span style="color:#A6E22E">npx</span><span style="color:#E6DB74"> @modelcontextprotocol/inspector</span><span style="color:#E6DB74"> uv</span><span style="color:#AE81FF"> --directory</span><span style="color:#E6DB74"> .</span><span style="color:#E6DB74"> run</span><span style="color:#E6DB74"> spotify-mcp</span></span></code></pre>
+<ul>
+<li>
+<p>This starts the MCP Server Inspector UI.</p>
+</li>
+<li>
+<p>Click Connect, then go to Tools → List Tools.</p>
+</li>
+<li>
+<p>Choose any tool (e.g., SpotifyQueue)</p>
+</li>
+<li>
+<p>Pick an action (like get), type it, and hit Run Tool</p>
+</li>
+<li>
+<p>This triggers the Spotify authentication flow</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Authenticate Your Spotify Account</strong></p>
+<ul>
+<li>A Spotify login/authorization window will appear.</li>
+<li>Grant access to your account</li>
+<li>Access tokens are saved locally for future use</li>
+</ul>
+</li>
+<li>
+<p><strong>Launch the Agent Interface</strong></p>
+<pre class="astro-code monokai" style="background-color:#272822;color:#F8F8F2; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color:#A6E22E">streamlit</span><span style="color:#E6DB74"> run</span><span style="color:#E6DB74"> spotify-agent-final.py</span></span></code></pre>
+</li>
+</ol>
+<p>Handles vague input gracefully with follow-ups.</p>
+<h2 id="challenges--learnings">Challenges &#x26; Learnings</h2>
+<h3 id="authentication-confusion">Authentication Confusion</h3>
+<p>Getting MCP Inspector + Spotify OAuth to play nicely took the most time.</p>
+<h3 id="connecting-tools-to-agents">Connecting Tools to Agents</h3>
+<p>Learned how to plug real-world tools into LLMs via a protocol instead of hardcoding APIs.</p>
+<h3 id="secure-agent-design">Secure Agent Design</h3>
+<p>Gained experience in securely sandboxing agents while still enabling control over remote services.</p>
+<h2 id="tech-stack">Tech Stack</h2>
+<ul>
+<li>
+<p>Model Context Protocol (MCP)</p>
+</li>
+<li>
+<p>spotify-mcp-server</p>
+</li>
+<li>
+<p>Streamlit</p>
+</li>
+<li>
+<p>Agno Framework</p>
+</li>
+<li>
+<p>Google Gemini API</p>
+</li>
+</ul>
+<h2 id="github">GitHub</h2>
+<p><a href="https://github.com/juzztjawa/spotify-agent">Spotify Agent GitHub Repo</a></p>
+<h2 id="preview">Preview</h2>
+<figure>
+  <img src="/assets/images/blog2/Demo.png" alt="MCP">
+  <figcaption>Overview of how MCP works</figcaption>
+</figure>
+<h2 id="conclusion">Conclusion</h2>
+<p>This project started as a small idea — “what if my AI could control Spotify?” — but it quickly turned into a powerful demonstration of what’s possible when you connect <strong>LLMs with real-world tools</strong> using open standards like <strong>Model Context Protocol (MCP)</strong>.</p>
+<p>It’s no longer just about answering questions — it’s about <strong>taking action</strong>. Whether it’s organizing your playlists, fetching music facts, or just playing the right track at the right time — this agent turns natural language into real actions, making the LLM feel more useful than ever.</p>
+<p>And the best part? This architecture isn’t limited to Spotify. MCP makes it easy to plug in other services and extend this approach to build broader <strong>agentic systems</strong> — music is just the beginning.</p> </div></div>  <div class="mx-auto max-w-screen-lg px-3 py-6"><div class="border-t border-gray-600 pt-5"><div class="text-sm text-gray-200">© Copyright <!-- -->2025<!-- --> by <!-- -->JawaDev<!-- -->. Built with ♥ by<!-- --> <a class="text-cyan-400 hover:underline" href="https://creativedesignsguru.com" target="_blank" rel="noopener noreferrer">CreativeDesignsGuru</a>.</div></div></div> </body></html>
