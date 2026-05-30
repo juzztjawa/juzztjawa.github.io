@@ -1,0 +1,210 @@
+---
+import { siteConfig } from '../data/site';
+---
+
+<section class="relative pt-10 pb-20 sm:pt-16 sm:pb-28 px-4 sm:px-8 max-w-6xl mx-auto" data-section="hero">
+  <!-- File path breadcrumb -->
+  <div class="flex items-center gap-2 text-[11px] text-[#7d8590] mb-4 font-mono tracking-wide">
+    <span class="text-[#4a5563]">~</span>
+    <span class="text-[#4a5563]">/</span>
+    <span>jawahar</span>
+    <span class="text-[#4a5563]">/</span>
+    <span class="text-[#56d4dd]">index.tsx</span>
+    <span class="text-[#4a5563] ml-2">— last modified: just now</span>
+  </div>
+
+  <!-- Split: terminal + photo IDE pane -->
+  <div class="grid grid-cols-1 lg:grid-cols-[1.6fr_1fr] gap-5">
+    <!-- Terminal window -->
+    <div class="term-window">
+      <div class="term-titlebar">
+        <span class="term-dot term-dot-red"></span>
+        <span class="term-dot term-dot-yellow"></span>
+        <span class="term-dot term-dot-green"></span>
+        <div class="term-title">jawahar@portfolio: ~ — bash — 86×24</div>
+        <div class="text-[10px] text-[#7d8590]">⌘T</div>
+      </div>
+      <div class="term-body" id="term-feed" aria-live="polite">
+        <noscript>
+          <div><span class="term-prompt">jawahar@portfolio</span><span class="text-[#7d8590]">:</span><span class="term-path">~</span><span class="term-prompt-arrow">$</span> whoami</div>
+          <div class="term-output">Jawahar A S — AI/ML Engineer.</div>
+          <div><span class="term-prompt">jawahar@portfolio</span><span class="text-[#7d8590]">:</span><span class="term-path">~</span><span class="term-prompt-arrow">$</span> cat about.txt</div>
+          <div class="term-output">Build first. Shape later. Momentum over perfection.</div>
+          <div class="term-output">The best systems evolve one layer at a time.</div>
+        </noscript>
+      </div>
+    </div>
+
+    <!-- Profile photo as IDE preview pane -->
+    <aside class="ide-card group" aria-label="profile photo">
+      <div class="ide-card-header">
+        <div class="ide-card-dots"><span></span><span></span><span></span></div>
+        <div class="flex items-center gap-1.5 ml-2 text-[#e6edf3]">
+          <svg class="w-3 h-3 text-[#d29922]" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M2.5 1.5h11a1 1 0 011 1v11a1 1 0 01-1 1h-11a1 1 0 01-1-1v-11a1 1 0 011-1zm2 3a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm-1 7.5l3-3 2 2 4-4 3 3v2.5h-12V12z"/>
+          </svg>
+          <span>profile.jpg</span>
+        </div>
+        <span class="flex-1"></span>
+        <span class="text-[#4a5563] text-[10px]">preview</span>
+      </div>
+      <div class="relative bg-[#0a0e12] overflow-hidden aspect-[4/5]">
+        <!-- pixel-like grid backdrop, in case the image hides slowly -->
+        <div class="absolute inset-0 opacity-30" style="background-image: linear-gradient(rgba(125,133,144,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(125,133,144,0.08) 1px, transparent 1px); background-size: 16px 16px;"></div>
+        <img
+          src="/assets/images/Photograph-latest.jpg"
+          alt="Jawahar A S"
+          class="relative w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
+          loading="eager"
+        />
+        <!-- corner crosshairs -->
+        <span class="absolute top-2 left-2 w-3 h-3 border-l border-t border-[#ffb547]/70"></span>
+        <span class="absolute top-2 right-2 w-3 h-3 border-r border-t border-[#ffb547]/70"></span>
+        <span class="absolute bottom-2 left-2 w-3 h-3 border-l border-b border-[#ffb547]/70"></span>
+        <span class="absolute bottom-2 right-2 w-3 h-3 border-r border-b border-[#ffb547]/70"></span>
+        <!-- bottom badge -->
+        <div class="absolute bottom-3 left-1/2 -translate-x-1/2 px-2 py-1 bg-[#0b0f14]/85 backdrop-blur-sm border border-[#30363d] rounded text-[10px] text-[#ffb547] tracking-widest whitespace-nowrap">
+          JAWAHAR · A · S
+        </div>
+      </div>
+      <!-- Status footer -->
+      <div class="grid grid-cols-3 text-[10px] text-[#7d8590] border-t border-[#21262d] divide-x divide-[#21262d]">
+        <div class="px-3 py-2"><span class="text-[#4a5563]">size:</span> <span class="text-[#e6edf3]">human</span></div>
+        <div class="px-3 py-2"><span class="text-[#4a5563]">loc:</span> <span class="text-[#3fb950]">india</span></div>
+        <div class="px-3 py-2"><span class="text-[#4a5563]">status:</span> <span class="text-[#ffb547]">online</span></div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Sub-hero meta — order matches page flow -->
+  <div class="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 fade-up" style="animation-delay: 6s">
+    <a href="#journey" class="ide-card group p-5 block">
+      <div class="text-[10px] text-[#7d8590] tracking-widest uppercase mb-1">// journey</div>
+      <div class="text-base text-[#e6edf3] group-hover:text-[#ffb547] transition-colors flex items-center gap-2">
+        git log --graph
+        <span class="text-[#ffb547] opacity-0 group-hover:opacity-100 transition-opacity">↵</span>
+      </div>
+    </a>
+    <a href="#projects" class="ide-card group p-5 block">
+      <div class="text-[10px] text-[#7d8590] tracking-widest uppercase mb-1">// works</div>
+      <div class="text-base text-[#e6edf3] group-hover:text-[#ffb547] transition-colors flex items-center gap-2">
+        cd ./projects
+        <span class="text-[#ffb547] opacity-0 group-hover:opacity-100 transition-opacity">↵</span>
+      </div>
+    </a>
+    <a href="#writing" class="ide-card group p-5 block">
+      <div class="text-[10px] text-[#7d8590] tracking-widest uppercase mb-1">// writing</div>
+      <div class="text-base text-[#e6edf3] group-hover:text-[#ffb547] transition-colors flex items-center gap-2">
+        cd ./blog
+        <span class="text-[#ffb547] opacity-0 group-hover:opacity-100 transition-opacity">↵</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<script>
+  type Step =
+    | { kind: 'cmd'; text: string; delay?: number }
+    | { kind: 'out'; html: string; delay?: number }
+    | { kind: 'blank' }
+    | { kind: 'prompt-only' };
+
+  const PROMPT = `<span class="term-prompt">jawahar@portfolio</span><span style="color:#7d8590">:</span><span class="term-path">~</span><span class="term-prompt-arrow">$</span>&nbsp;`;
+
+  const script: Step[] = [
+    { kind: 'cmd', text: 'whoami' },
+    { kind: 'out', html: '<span class="term-fn">jawahar</span> <span class="term-string">"a.s."</span> <span class="term-comment">// ai/ml engineer @ avasoft</span>' },
+    { kind: 'blank' },
+    { kind: 'cmd', text: 'cat about.txt', delay: 280 },
+    { kind: 'out', html: 'build first. shape later. <span style="color:#ffb547">momentum &gt; perfection.</span>' },
+    { kind: 'out', html: '<span class="term-comment">// the best systems evolve one layer at a time.</span>' },
+    { kind: 'blank' },
+    { kind: 'cmd', text: 'ls --recent', delay: 280 },
+    { kind: 'out', html: '<span class="term-key">projects/</span>     <span class="term-num">4</span> items   <span class="term-comment">// ↓ scroll</span>' },
+    { kind: 'out', html: '<span class="term-key">blog/</span>         <span class="term-num">2</span> items' },
+    { kind: 'out', html: '<span class="term-key">journey.svg</span>   <span class="term-comment">// git log --graph</span>' },
+    { kind: 'blank' },
+    { kind: 'prompt-only' },
+  ];
+
+  function startHeroTerm() {
+    const feed = document.getElementById('term-feed');
+    if (!feed) return;
+    if (feed.dataset.started === '1') return;
+    feed.dataset.started = '1';
+    feed.innerHTML = '';
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let i = 0;
+
+    const next = () => {
+      if (i >= script.length) return;
+      const step = script[i++];
+
+      if (step.kind === 'blank') {
+        const div = document.createElement('div');
+        div.style.height = '0.5em';
+        feed.appendChild(div);
+        setTimeout(next, 80);
+        return;
+      }
+
+      if (step.kind === 'prompt-only') {
+        const div = document.createElement('div');
+        div.innerHTML = PROMPT + '<span class="cursor"></span>';
+        feed.appendChild(div);
+        feed.scrollTop = feed.scrollHeight;
+        return;
+      }
+
+      if (step.kind === 'out') {
+        const div = document.createElement('div');
+        div.className = 'term-output';
+        div.innerHTML = step.html;
+        div.style.opacity = '0';
+        div.style.transform = 'translateY(4px)';
+        div.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        feed.appendChild(div);
+        requestAnimationFrame(() => {
+          div.style.opacity = '1';
+          div.style.transform = 'translateY(0)';
+        });
+        feed.scrollTop = feed.scrollHeight;
+        setTimeout(next, step.delay ?? 160);
+        return;
+      }
+
+      const div = document.createElement('div');
+      div.innerHTML = PROMPT + '<span class="typed"></span><span class="cursor-thin"></span>';
+      feed.appendChild(div);
+      const typedEl = div.querySelector('.typed') as HTMLElement;
+      const cursorEl = div.querySelector('.cursor-thin') as HTMLElement;
+
+      if (reduced) {
+        typedEl.textContent = step.text;
+        cursorEl?.remove();
+        setTimeout(next, 200);
+        return;
+      }
+
+      let ci = 0;
+      const typeChar = () => {
+        if (ci < step.text.length) {
+          typedEl.textContent = (typedEl.textContent ?? '') + step.text[ci++];
+          feed.scrollTop = feed.scrollHeight;
+          setTimeout(typeChar, 40 + Math.random() * 50);
+        } else {
+          cursorEl?.remove();
+          setTimeout(next, step.delay ?? 320);
+        }
+      };
+      setTimeout(typeChar, 80);
+    };
+
+    setTimeout(next, 450);
+  }
+
+  startHeroTerm();
+  document.addEventListener('astro:after-swap', startHeroTerm);
+</script>

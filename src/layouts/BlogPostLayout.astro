@@ -1,0 +1,111 @@
+---
+import PageLayout from './PageLayout.astro';
+
+interface Props {
+  frontmatter: {
+    title: string;
+    description: string;
+    pubDate: string;
+    heroImage: string;
+    heroAlt: string;
+    tags?: string[];
+    author?: string;
+  };
+}
+
+const { frontmatter } = Astro.props;
+const date = new Date(frontmatter.pubDate).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+const isoDate = new Date(frontmatter.pubDate).toISOString().split('T')[0];
+const slugLike = frontmatter.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const readMins = Math.max(2, Math.round(frontmatter.description.length / 50));
+---
+
+<PageLayout title={frontmatter.title} description={frontmatter.description} image={frontmatter.heroImage}>
+  <article class="max-w-3xl mx-auto">
+    <!-- Back link -->
+    <a href="/blog" class="inline-flex items-center gap-2 text-[12px] text-[#7d8590] hover:text-[#ffb547] transition-colors mb-10 font-mono">
+      <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+      </svg>
+      cd ../blog
+    </a>
+
+    <!-- Filename / kind -->
+    <div class="text-[11px] text-[#7d8590] font-mono mb-3 flex items-center gap-2">
+      <svg class="w-3 h-3 text-[#79c0ff]" viewBox="0 0 16 16" fill="currentColor">
+        <path d="M14.85 3H1.15A1.15 1.15 0 000 4.15v7.7A1.15 1.15 0 001.15 13h13.7A1.15 1.15 0 0016 11.85v-7.7A1.15 1.15 0 0014.85 3zM9 11H7.5V7.5L6 9 4.5 7.5V11H3V5h1.5L6 6.5 7.5 5H9v6zm2.5.5L9.5 9H11V5h1v4h1.5l-2 2.5z"/>
+      </svg>
+      <span class="text-[#56d4dd]">{slugLike}.md</span>
+      <span class="text-[#4a5563]">·</span>
+      <span>post</span>
+    </div>
+
+    <!-- TITLE: dominant -->
+    <h1 class="font-display text-[36px] sm:text-5xl lg:text-6xl font-bold text-[#e6edf3] tracking-tight leading-[1.05] mb-5">
+      {frontmatter.title}
+    </h1>
+
+    <!-- Description -->
+    <p class="text-[16px] sm:text-[17px] text-[#b1bac4] leading-relaxed mb-6 max-w-2xl">
+      {frontmatter.description}
+    </p>
+
+    <!-- Metadata strip -->
+    <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-[12px] text-[#7d8590] font-mono pb-6 mb-10 border-b border-[#21262d]">
+      <span class="inline-flex items-center gap-1.5">
+        <svg class="w-3 h-3 text-[#7d8590]" viewBox="0 0 16 16" fill="currentColor"><path d="M4.75 0a.75.75 0 01.75.75V2h5V.75a.75.75 0 011.5 0V2h1.25c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0113.25 16H2.75A1.75 1.75 0 011 14.25V3.75C1 2.784 1.784 2 2.75 2H4V.75A.75.75 0 014.75 0zm0 3.5h-2a.25.25 0 00-.25.25V6h11V3.75a.25.25 0 00-.25-.25h-2v.75a.75.75 0 01-1.5 0V3.5h-5v.75a.75.75 0 01-1.5 0V3.5zM2.5 7.5v6.75c0 .138.112.25.25.25h10.5a.25.25 0 00.25-.25V7.5h-11z"/></svg>
+        <time datetime={frontmatter.pubDate} class="text-[#e6edf3]">{date}</time>
+      </span>
+      {frontmatter.author && (
+        <>
+          <span class="text-[#30363d]">·</span>
+          <span class="inline-flex items-center gap-1.5">
+            <span class="text-[#7d8590]">by</span>
+            <span class="text-[#ffb547]">{frontmatter.author}</span>
+          </span>
+        </>
+      )}
+      <span class="text-[#30363d]">·</span>
+      <span class="inline-flex items-center gap-1.5">
+        <span class="text-[#7d8590]">~{readMins} min read</span>
+      </span>
+      {frontmatter.tags && frontmatter.tags.length > 0 && (
+        <>
+          <span class="text-[#30363d]">·</span>
+          <span class="inline-flex flex-wrap items-center gap-1.5">
+            {frontmatter.tags.map((tag) => <span class="syntax-tag">{tag}</span>)}
+          </span>
+        </>
+      )}
+    </div>
+
+    <!-- Hero image now AFTER the title identity is established -->
+    {frontmatter.heroImage && (
+      <div class="rounded-lg overflow-hidden mb-12 border border-[#21262d] bg-[#0a0e12]">
+        <img
+          src={frontmatter.heroImage}
+          alt={frontmatter.heroAlt}
+          class="w-full max-h-[420px] object-cover"
+        />
+      </div>
+    )}
+
+    <!-- Content -->
+    <div class="prose prose-lg prose-custom max-w-none">
+      <slot />
+    </div>
+
+    <!-- Footer nav -->
+    <div class="mt-16 pt-6 border-t border-[#21262d] flex items-center justify-between text-[12px] font-mono">
+      <a href="/blog" class="text-[#7d8590] hover:text-[#ffb547] transition-colors inline-flex items-center gap-1.5">
+        <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+        all posts
+      </a>
+      <span class="text-[#4a5563]">EOF</span>
+    </div>
+  </article>
+</PageLayout>

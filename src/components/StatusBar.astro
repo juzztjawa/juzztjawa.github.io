@@ -1,0 +1,144 @@
+---
+import { siteConfig } from '../data/site';
+import { getCollection } from 'astro:content';
+
+const [projects, posts] = await Promise.all([
+  getCollection('projects'),
+  getCollection('blog'),
+]);
+const projCount = projects.filter((p) => !p.data.draft).length;
+const postCount = posts.filter((p) => !p.data.draft).length;
+---
+
+<div class="status-bar" id="status-bar" aria-hidden="true">
+  <!-- Scroll progress fill behind the bar -->
+  <div
+    id="sb-progress"
+    class="absolute inset-y-0 left-0 bg-[#1a1208]/15 pointer-events-none transition-[width] duration-100"
+    style="width: 0%"
+  ></div>
+
+  <!-- LEFT cluster -->
+  <a
+    href={siteConfig.github}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="status-bar-item relative hover:!bg-[#1a1208]/15"
+    title="open github"
+  >
+    <svg class="w-3 h-3" viewBox="0 0 16 16" fill="currentColor">
+      <path d="M11.75 2.5a.75.75 0 100 1.5.75.75 0 000-1.5zm-2.25.75a2.25 2.25 0 113 2.122V6A2.5 2.5 0 0110 8.5H6a1 1 0 00-1 1v1.128a2.251 2.251 0 11-1.5 0V5.372a2.25 2.25 0 111.5 0v1.836A2.492 2.492 0 016 7h4a1 1 0 001-1v-.628A2.25 2.25 0 019.5 3.25zM4.25 12a.75.75 0 100 1.5.75.75 0 000-1.5zM3.5 3.25a.75.75 0 111.5 0 .75.75 0 01-1.5 0z"/>
+    </svg>
+    <span>main</span>
+    <svg class="w-2.5 h-2.5 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+    </svg>
+  </a>
+
+  <!-- Section indicator -->
+  <div class="status-bar-item relative" id="sb-section-wrap">
+    <span class="w-1.5 h-1.5 rounded-full bg-[#1a1208]" id="sb-section-dot"></span>
+    <span class="text-[#1a1208] opacity-70">section:</span>
+    <span class="font-semibold uppercase" id="sb-section">hero</span>
+  </div>
+
+  <!-- Scroll percent -->
+  <div class="status-bar-item relative hidden sm:flex">
+    <span class="opacity-70">scroll:</span>
+    <span class="font-semibold tabular-nums" id="sb-percent">0%</span>
+  </div>
+
+  <div class="status-bar-spacer relative"></div>
+
+  <!-- RIGHT cluster -->
+  <div class="status-bar-right flex items-center h-full relative">
+    <div class="status-bar-item hidden md:flex">
+      <span class="opacity-70">content:</span>
+      <span class="font-semibold tabular-nums">{projCount}</span><span class="opacity-70">P</span>
+      <span class="opacity-50">·</span>
+      <span class="font-semibold tabular-nums">{postCount}</span><span class="opacity-70">B</span>
+    </div>
+    <a
+      href={`mailto:`}
+      class="status-bar-item hover:!bg-[#1a1208]/15 hidden md:flex"
+      id="sb-toggle-cmd"
+      title="press ⌘K"
+    >
+      <span class="opacity-70">⌘</span>
+      <span class="font-semibold">K</span>
+      <span class="opacity-70 hidden lg:inline">command palette</span>
+    </a>
+    <div class="status-bar-item">
+      <span id="sb-time" class="tabular-nums">--:--</span>
+      <span class="opacity-70 hidden sm:inline">IST</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .status-bar { position: fixed; overflow: hidden; }
+  .status-bar > * { position: relative; z-index: 1; }
+  .status-bar #sb-progress { z-index: 0; }
+</style>
+
+<script>
+  function initStatusBar() {
+    const sectionEl = document.getElementById('sb-section');
+    const percentEl = document.getElementById('sb-percent');
+    const progressEl = document.getElementById('sb-progress');
+    const timeEl = document.getElementById('sb-time');
+
+    if (!sectionEl || !percentEl || !progressEl) return;
+
+    const sections = Array.from(document.querySelectorAll<HTMLElement>('[data-section]'));
+
+    function updateOnScroll() {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = max > 0 ? Math.min(100, (window.scrollY / max) * 100) : 0;
+      percentEl!.textContent = `${Math.round(pct)}%`;
+      progressEl!.style.width = `${pct}%`;
+
+      // figure out active section
+      const offset = window.innerHeight * 0.4;
+      let active = sections[0];
+      for (const s of sections) {
+        const top = s.getBoundingClientRect().top;
+        if (top - offset <= 0) active = s;
+      }
+      if (active) {
+        const name = active.dataset.section || 'hero';
+        if (sectionEl!.textContent !== name) sectionEl!.textContent = name;
+      }
+    }
+
+    function updateClock() {
+      if (!timeEl) return;
+      const d = new Date();
+      const h = String(d.getHours()).padStart(2, '0');
+      const m = String(d.getMinutes()).padStart(2, '0');
+      timeEl.textContent = `${h}:${m}`;
+    }
+
+    updateOnScroll();
+    updateClock();
+    window.addEventListener('scroll', updateOnScroll, { passive: true });
+    window.addEventListener('resize', updateOnScroll, { passive: true });
+    setInterval(updateClock, 30_000);
+
+    // ⌘K → scroll to top (placeholder palette)
+    const cmdBtn = document.getElementById('sb-toggle-cmd');
+    cmdBtn?.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    window.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+  }
+
+  initStatusBar();
+  document.addEventListener('astro:after-swap', initStatusBar);
+</script>

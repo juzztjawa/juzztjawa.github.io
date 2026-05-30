@@ -1,0 +1,94 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+  date: Date;
+  tags?: string[];
+  slug: string;
+  index: number;
+}
+
+const { title, description, image, imageAlt, date, tags, slug, index } = Astro.props;
+
+const formattedDate = date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
+const slugFile = slug.replace(/[^a-z0-9-]/gi, '-').toLowerCase();
+const padded = String(index + 1).padStart(2, '0');
+const isoDate = date.toISOString().split('T')[0];
+---
+
+<a href={`/blog/${slug}`} class="ide-card group block w-full max-w-2xl" data-reveal>
+  <div class="ide-card-header">
+    <div class="ide-card-dots">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="flex items-center gap-1.5 ml-2 text-[#e6edf3]">
+      <svg class="w-3 h-3 text-[#79c0ff]" viewBox="0 0 16 16" fill="currentColor">
+        <path d="M14.85 3H1.15A1.15 1.15 0 000 4.15v7.7A1.15 1.15 0 001.15 13h13.7A1.15 1.15 0 0016 11.85v-7.7A1.15 1.15 0 0014.85 3zM9 11H7.5V7.5L6 9 4.5 7.5V11H3V5h1.5L6 6.5 7.5 5H9v6zm2.5.5L9.5 9H11V5h1v4h1.5l-2 2.5z"/>
+      </svg>
+      <span>{slugFile}.md</span>
+    </div>
+    <span class="flex-1"></span>
+    <span class="text-[#4a5563]">post / {padded}</span>
+  </div>
+
+  <div class="relative overflow-hidden bg-[#0a0e12] aspect-[16/9]">
+    <img
+      src={image}
+      alt={imageAlt}
+      class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+      loading="lazy"
+    />
+    <div class="absolute inset-0 bg-gradient-to-t from-[#0b0f14] via-transparent to-transparent opacity-70"></div>
+    <div class="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2 py-1 bg-[#0b0f14]/85 backdrop-blur-sm border border-[#30363d] rounded text-[10px] font-mono">
+      <span class="text-[#3fb950]">date:</span>
+      <span class="text-[#ffa657]">"{isoDate}"</span>
+    </div>
+  </div>
+
+  <div class="p-5 sm:p-6">
+    <!-- markdown frontmatter feel -->
+    <div class="text-[11px] text-[#7d8590] mb-3 leading-relaxed">
+      <span class="text-[#4a5563]">---</span><br />
+      <span class="text-[#7d8590]">title:</span> <span class="text-[#ffa657]">"{title}"</span><br />
+      <span class="text-[#7d8590]">date:</span> <span class="text-[#79c0ff]">{formattedDate}</span><br />
+      <span class="text-[#4a5563]">---</span>
+    </div>
+
+    <!-- Heading as a markdown H1 -->
+    <h3 class="font-display text-xl sm:text-2xl text-[#e6edf3] group-hover:text-[#ffb547] transition-colors leading-tight mb-3">
+      <span class="text-[#7d8590] mr-2">#</span>{title}
+    </h3>
+
+    <p class="text-[13px] text-[#b1bac4] leading-relaxed mb-4 line-clamp-2">
+      {description}
+    </p>
+
+    {
+      tags && tags.length > 0 && (
+        <div class="flex flex-wrap gap-1.5 mb-4">
+          {tags.slice(0, 4).map((tag) => (
+            <span class="syntax-tag">{tag}</span>
+          ))}
+        </div>
+      )
+    }
+
+    <div class="flex items-center justify-between pt-3 border-t border-[#21262d]">
+      <span class="text-[11px] text-[#7d8590]">
+        ~{Math.max(2, Math.round(description.length / 50))} min read
+      </span>
+      <span class="inline-flex items-center gap-1.5 text-[12px] text-[#ffb547] group-hover:gap-3 transition-all">
+        cat post.md
+        <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+        </svg>
+      </span>
+    </div>
+  </div>
+</a>

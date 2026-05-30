@@ -1,0 +1,46 @@
+---
+import BlogCard from './BlogCard.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<section id="writing" class="pin-section" data-section="writing">
+  <div class="pin-backdrop">
+    <div class="pin-backdrop-label">
+      <span class="punc">//</span> ~/<span class="key">writing</span> <span class="punc">·</span>
+      <span class="punc">stream(</span><span class="str">"posts/*.md"</span><span class="punc">)</span>
+    </div>
+    <div class="relative">
+      <h2 class="pin-title pin-title-outline">writing</h2>
+      <div class="hidden sm:block absolute -top-4 -right-6 text-[10px] text-[#4a5563] tracking-[0.3em] rotate-90 origin-right">
+        SECTION · 04
+      </div>
+    </div>
+    <div class="mt-6 text-[12px] text-[#7d8590] max-w-md">
+      <span class="text-[#3fb950]">$</span> find blog/ -name <span class="text-[#ffa657]">"*.md"</span> <span class="text-[#7d8590]">|</span> wc -l
+      <span class="ml-2 text-[#ffb547]">→ {posts.length}</span>
+    </div>
+  </div>
+
+  <div class="pin-stage">
+    {
+      posts.map((post, i) => (
+        <div class="pin-card-wrap">
+          <BlogCard
+            title={post.data.title}
+            description={post.data.description}
+            image={post.data.heroImage}
+            imageAlt={post.data.heroAlt}
+            date={post.data.pubDate}
+            tags={post.data.tags}
+            slug={post.id}
+            index={i}
+          />
+        </div>
+      ))
+    }
+  </div>
+</section>

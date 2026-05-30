@@ -1,0 +1,133 @@
+---
+title: "Batch Norm - Weakly Supervised Anomaly Detection"
+description: "A deep learning-based anomaly detection system that leverages both RGB and optical flow features to detect suspicious events in surveillance videos — using only video-level labels."
+pubDate: 2025-05-15
+heroImage: "/assets/images/project1/intro.png"
+heroAlt: "Frames from anomaly videos"
+tags: ["Python", "PyTorch", "scikit-learn"]
+github: "https://github.com/juzztjawa"
+order: 1
+---
+
+import Figure from '../../components/mdx/Figure.astro';
+
+<Figure src="/assets/images/project1/intro.png" alt="Frames from anomaly videos" caption="Frames from anomaly videos." />
+
+Modern surveillance systems generate **hours of footage**, yet catching rare abnormal events like thefts or fights remains a needle-in-a-haystack problem. Manual monitoring is exhausting and prone to errors. So, how do we build a system that automatically flags the suspicious moments — **without needing frame-level labels**?
+
+This is the challenge tackled in my final year project: combining **RGB and motion cues (optical flow)** with a **BatchNorm-driven learning framework** to detect anomalies from surveillance videos — using only weak supervision.
+
+---
+
+## The Problem
+
+Traditional anomaly detection models use **RGB features** to learn what's normal and what's not. But this ignores something crucial: **motion**.
+
+Subtle movement — like someone sneaking or sprinting — often signals an anomaly, and **RGB frames alone won't capture that**.
+
+Also, annotating the exact timing of anomalies is expensive and impractical. That's where **weak supervision** comes in — we only know whether a full video contains an anomaly, not where.
+
+The goal?
+
+> Build a system that understands **"when something feels off"**, even with coarse labels and minimal supervision.
+
+---
+
+## Our Approach
+
+We extend a state-of-the-art weakly supervised anomaly detection method by incorporating motion awareness through **optical flow**. Here's how it all comes together:
+
+### Step 1: Extracting Features from Videos
+
+Each video snippet (16 frames) goes through two parallel pipelines:
+
+- **RGB Path**: Passed through a frozen **I3D model**, giving a 1024-dim feature vector.
+- **Flow Path**: Optical flow is computed using **RAFT-small**, and then fed into another I3D model, producing another 1024-dim feature vector.
+
+These are **concatenated** into a **2048-dimensional representation** — capturing both appearance and motion.
+
+<Figure src="/assets/images/project1/architecture.png" alt="High-level overview of the anomaly detection system" caption="High-level overview of the anomaly detection system." />
+
+---
+
+### Step 2: Enhancing Features with Attention
+
+Raw features can be noisy. To clean things up and **focus on what matters**, each stream passes through a **Transformer-based Feature Enhancer**. This module:
+
+- Captures short-term dependencies
+- Learns which parts of a video snippet are important
+- Outputs cleaner, more robust features
+
+---
+
+### Step 3: Scoring Snippets with DFM
+
+We use a statistical measure called **Divergence from Mean (DFM)**, which checks how much a feature vector deviates from the batch mean (via BatchNorm stats). High DFM scores? Likely anomalies.
+
+This helps us **choose which snippets to train on** — we only use the most "suspicious-looking" ones.
+
+---
+
+### Step 4: Mean-based Pull-Push Loss
+
+Now comes the core of the training:
+
+- **Pull** normal features toward the batch mean
+- **Push** anomalous features away from the cluster
+
+This is done using a custom **Mean-based Pull-Push (MPP) loss**, which doesn't require explicit anomaly labels — it just uses statistical cues from the data.
+
+The result? A well-structured feature space that **naturally separates normal and abnormal behavior**.
+
+---
+
+## Results
+
+We tested the model on two benchmark datasets: **UCF-Crime** and **XD-Violence**.
+
+### XD-Violence
+
+- **RGB Only**: 81.32% AP
+- **RGB + Flow**: **84.60% AP**
+
+<Figure src="/assets/images/project1/XD-RGB.png" alt="XD-Violence RGB results" caption="Results observed from the XD-violence for using only RGB features. The highest AP achieved is 81.32%." />
+
+<Figure src="/assets/images/project1/XD-Flow.png" alt="XD-Violence RGB+Flow results" caption="Results observed from the XD-violence for using both RGB and flow features. The highest AP achieved is 84.60%." />
+
+### UCF-Crime
+
+- **RGB Only**: 80.95% AUC
+- **RGB + Flow**: **81.65% AUC**
+
+<Figure src="/assets/images/project1/UCF-RGB.png" alt="UCF-Crime RGB results" caption="Results observed from the UCF-Crime for using only the RGB features. The highest AUC achieved is 80.95%." />
+
+<Figure src="/assets/images/project1/UCF-Flow.png" alt="UCF-Crime RGB+Flow results" caption="Results observed from the UCF-Crime for using both the RGB and flow features. The highest AUC achieved is 81.65%." />
+
+These gains are **not just numerical** — they show that motion cues make a real difference. The training was more stable, and the model could pick up on events that RGB alone missed.
+
+---
+
+## Key Insights
+
+- **Motion-aware models** outperform RGB-only ones in detecting subtle actions like fighting or fleeing.
+- The **DFM + MPP framework** structures the feature space elegantly, even under weak supervision.
+- Even with no frame-level labels, the system can **localize anomalies well**, purely by leveraging feature divergence.
+
+---
+
+## Conclusion
+
+This project demonstrates how **a simple idea — combining motion and appearance** — can drastically improve anomaly detection in videos. By integrating **optical flow**, leveraging **BatchNorm statistics**, and designing a **clever loss function**, we build a robust system that performs well with limited supervision.
+
+But more than that, this work opens doors to future extensions:
+
+- Real-time inference (replace I3D with faster models like TimeSformer)
+- Better snippet selection strategies
+- Adapting the framework to **online/streaming anomaly detection**
+
+Anomaly detection is a tough nut to crack, but this project takes a meaningful step forward — **balancing accuracy, efficiency, and practicality** in one cohesive system.
+
+---
+
+**Want to dive deeper?**
+[Download Full Project Report PDF](/assets/images/project1/CS21B1031_Final_report.pdf)

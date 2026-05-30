@@ -1,0 +1,65 @@
+---
+title: "Autonomous Pick-and-Place System"
+description: "A real-time autonomous system that performs object detection, 3D localization, and orientation estimation to enable robotic pick-and-place tasks."
+pubDate: 2023-10-23
+heroImage: "/assets/images/project3/preview.png"
+heroAlt: "Preview of the autonomous pick-and-place system"
+tags: ["Python", "SAM", "OpenCV"]
+github: "https://github.com/juzztjawa/Autonomous-pick-and-place"
+order: 3
+---
+
+import Figure from '../../components/mdx/Figure.astro';
+import YouTube from '../../components/mdx/YouTube.astro';
+
+<Figure src="/assets/images/project3/preview.png" alt="Preview" caption="Preview" />
+
+A real-time autonomous system that performs object detection, 3D localization, and orientation estimation to enable robotic pick-and-place tasks. Leveraging Intel RealSense D435i depth data and Meta's Segment Anything Model (SAM), this module enables accurate object segmentation and spatial understanding — suitable for robotic manipulation in industrial and research settings.
+
+This module was developed as part of a larger robotics solution submitted to **GRID 2023 Hackathon**, where a team of five collaborated on building a complete autonomous robotic workflow. The section described here focuses on the **perception and localization** components.
+
+## Purpose
+
+Built as a submission for the **GRID 2023 Hackathon**, this project demonstrates how modern computer vision techniques can be integrated with depth sensing for precise robotic pick-and-place tasks.
+
+## Features
+
+- Real-time object segmentation using Meta's SAM (Segment Anything Model)
+- 3D localization of object centers from RGB + depth data (Intel RealSense D435i)
+- Object orientation estimation using Principal Component Analysis (PCA)
+- Robot approach direction computed using rotation matrices
+- Live visualization of:
+  - Annotated RGB frame with object coordinates and orientation
+  - Segmentation overlays and contour masks
+  - Colorized depth map
+- Real-time console logs:
+  - 3D world coordinates
+  - Orientation quaternion
+  - Approach vector for manipulation
+
+## Tech Stack
+
+Python, OpenCV, NumPy, Intel RealSense SDK 2.0, Segment Anything Model (SAM)
+
+## Team
+
+Team of 5. I contributed to the software module, focusing on:
+
+- Integrating the Intel RealSense D435i camera for RGB + depth capture
+- Implementing real-time object segmentation using SAM
+
+## Learning Outcome
+
+- Practical application of SAM in real-time object segmentation
+- Depth camera integration and world coordinate computation
+- Understanding PCA for object orientation estimation
+- Rotation matrix and quaternion usage in robotics
+- Collaborative development in a hackathon setting
+
+## Demo
+
+<YouTube id="uv9TCsMKBBM" title="Autonomous Pick and Place Robot Demo" />
+
+## GitHub
+
+[GitHub Repository](https://github.com/juzztjawa/Autonomous-pick-and-place)

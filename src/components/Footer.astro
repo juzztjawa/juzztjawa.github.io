@@ -1,0 +1,51 @@
+---
+import { siteConfig } from '../data/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-12 px-4 sm:px-8 max-w-5xl mx-auto pb-12">
+  <div class="border border-[#21262d] rounded-lg bg-[#11161d]/60 backdrop-blur-sm p-6 sm:p-8">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+      <div>
+        <div class="text-[10px] text-[#7d8590] tracking-widest uppercase mb-2">// signature</div>
+        <div class="font-display text-xl text-[#e6edf3]">jawahar a.s.</div>
+        <div class="text-[12px] text-[#7d8590] mt-1">ai/ml engineer · ./building</div>
+      </div>
+      <div>
+        <div class="text-[10px] text-[#7d8590] tracking-widest uppercase mb-2">// reach</div>
+        <ul class="space-y-1 text-[13px]">
+          <li>
+            <a href={siteConfig.github} target="_blank" rel="noopener noreferrer" class="link-term inline-flex items-center gap-2">
+              <span class="text-[#7d8590]">$</span> open github
+            </a>
+          </li>
+          <li>
+            <a href={siteConfig.linkedin} target="_blank" rel="noopener noreferrer" class="link-term inline-flex items-center gap-2">
+              <span class="text-[#7d8590]">$</span> open linkedin
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10px] text-[#7d8590] tracking-widest uppercase mb-2">// nav</div>
+        <ul class="space-y-1 text-[13px]">
+          <li><a href="/" class="link-term"><span class="text-[#7d8590]">cd</span> ~/</a></li>
+          <li><a href="/projects" class="link-term"><span class="text-[#7d8590]">cd</span> ~/projects</a></li>
+          <li><a href="/blog" class="link-term"><span class="text-[#7d8590]">cd</span> ~/blog</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-8 pt-4 border-t border-[#21262d] flex items-center justify-between flex-wrap gap-3 text-[11px] text-[#7d8590]">
+      <div>
+        <span class="text-[#7d8590]">/*</span> © {year} jawahar a.s. <span class="text-[#7d8590]">*/</span>
+      </div>
+      <div>
+        <span class="text-[#7d8590]">built with</span>
+        <a href="https://astro.build" target="_blank" rel="noopener noreferrer" class="text-[#ffb547] hover:underline">astro</a>
+        <span class="text-[#7d8590]">·</span>
+        <span class="text-[#ffb547]">no frameworks were harmed</span>
+      </div>
+    </div>
+  </div>
+</footer>

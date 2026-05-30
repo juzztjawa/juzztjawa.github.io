@@ -1,0 +1,86 @@
+---
+import { journey } from '../data/journey';
+---
+
+<section id="journey" class="relative px-4 sm:px-8 max-w-5xl mx-auto py-20" data-section="journey">
+  <!-- Section heading line -->
+  <div class="flex items-baseline justify-between mb-6 flex-wrap gap-3">
+    <div>
+      <div class="text-[11px] text-[#7d8590] tracking-widest uppercase mb-1">// section 02</div>
+      <h2 class="font-display text-3xl sm:text-4xl text-[#e6edf3] tracking-tight">
+        <span class="text-[#ffb547]">journey</span><span class="text-[#7d8590]">.</span><span class="text-[#56d4dd]">log</span>
+        <span class="text-[#4a5563]">( )</span>
+      </h2>
+    </div>
+    <div class="text-[11px] text-[#7d8590]">
+      <span class="text-[#3fb950]">$</span> git log --graph --oneline --all
+    </div>
+  </div>
+
+  <div class="git-log" data-reveal>
+    <div class="git-log-header">
+      <span class="term-dot term-dot-red"></span>
+      <span class="term-dot term-dot-yellow"></span>
+      <span class="term-dot term-dot-green"></span>
+      <span class="ml-2 text-[#7d8590]">git-log: jawahar/life — commits {journey.length}</span>
+      <span class="flex-1"></span>
+      <span class="text-[#3fb950] hidden sm:inline">● clean</span>
+    </div>
+
+    <div class="git-log-body">
+      {
+        journey.map((entry, i) => {
+          const isHead = entry.ref?.some((r) => r.type === 'head');
+          const isMilestone = entry.kind === 'milestone';
+          const kindIcon = {
+            work: '⚒',
+            education: '✦',
+            milestone: '◉',
+          }[entry.kind];
+
+          return (
+            <div class="git-row" data-reveal data-reveal-delay={i % 4}>
+              <div class="git-graph">
+                <span class={`git-node ${isHead ? 'head' : ''} ${entry.kind === 'education' ? 'merge' : ''}`}></span>
+              </div>
+              <span class="git-hash">{entry.hash}</span>
+              <div class="git-content">
+                {entry.ref && entry.ref.length > 0 && (
+                  <span class="git-refs">
+                    {entry.ref.map((r) => (
+                      <span class={`git-ref git-ref-${r.type}`}>{r.label}</span>
+                    ))}
+                  </span>
+                )}
+                <span class="git-message">
+                  <span class="text-[#7d8590] mr-1">{kindIcon}</span>
+                  {entry.title}
+                </span>
+                <span class="git-meta">
+                  <span class="author">@{entry.org.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}</span>
+                  {entry.period && <span class="mx-2 text-[#4a5563]">·</span>}
+                  {entry.period && <span class="date">{entry.period}</span>}
+                  {entry.description && (
+                    <>
+                      <span class="block mt-1 ml-0 text-[#b1bac4] italic">
+                        <span class="text-[#4a5563]">└─</span> {entry.description}
+                      </span>
+                    </>
+                  )}
+                </span>
+              </div>
+            </div>
+          );
+        })
+      }
+    </div>
+
+    <!-- footer / status -->
+    <div class="px-6 py-3 border-t border-[#21262d] bg-[#0d1117] text-[11px] text-[#7d8590] flex items-center justify-between flex-wrap gap-2">
+      <span>
+        <span class="text-[#3fb950]">●</span> on branch <span class="text-[#ffb547]">main</span> · ahead by <span class="text-[#e6edf3]">∞</span> commits
+      </span>
+      <span class="text-[#4a5563]">press <kbd class="px-1.5 py-0.5 bg-[#161b22] border border-[#30363d] rounded text-[10px] text-[#e6edf3]">q</kbd> to exit</span>
+    </div>
+  </div>
+</section>

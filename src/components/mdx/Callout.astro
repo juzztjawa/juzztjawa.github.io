@@ -1,0 +1,28 @@
+---
+interface Props {
+  type?: 'info' | 'warning' | 'tip';
+}
+
+const { type = 'info' } = Astro.props;
+
+const styles = {
+  info: 'border-sky-500 bg-sky-50 dark:bg-sky-900/20 text-sky-900 dark:text-sky-100',
+  warning: 'border-amber-500 bg-amber-50 dark:bg-amber-900/20 text-amber-900 dark:text-amber-100',
+  tip: 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-900 dark:text-emerald-100',
+};
+
+const icons = {
+  info: 'ℹ',
+  warning: '⚠',
+  tip: '💡',
+};
+---
+
+<div class={`my-6 rounded-xl border-l-4 p-4 ${styles[type]}`}>
+  <div class="flex gap-2">
+    <span class="text-lg">{icons[type]}</span>
+    <div class="prose-sm max-w-none">
+      <slot />
+    </div>
+  </div>
+</div>

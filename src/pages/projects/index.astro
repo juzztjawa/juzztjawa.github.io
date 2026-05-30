@@ -1,0 +1,32 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects'))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+---
+
+<PageLayout title="Projects · Jawahar A S" description="Projects by Jawahar A S — AI, ML, Computer Vision, and Robotics.">
+  <SectionHeading title="projects" highlight="all" section="dir/projects" />
+
+  {projects.length === 0 ? (
+    <p class="text-[#7d8590] font-mono text-sm">// no projects yet — `touch first.tsx` coming soon</p>
+  ) : (
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {projects.map((project, i) => (
+        <ProjectCard
+          title={project.data.title}
+          description={project.data.description}
+          image={project.data.heroImage}
+          imageAlt={project.data.heroAlt}
+          tags={project.data.tags}
+          slug={project.id}
+          index={i}
+        />
+      ))}
+    </div>
+  )}
+</PageLayout>

@@ -1,0 +1,142 @@
+---
+title: "Your AI DJ - How I Built a Spotify Agent Using MCP"
+description: "What if you could simply type \"Play my chill playlist\" — and your AI assistant actually controls Spotify to make it happen?"
+pubDate: 2025-07-21
+heroImage: "/assets/images/blog2/Spotify-Logo.jpg"
+heroAlt: "Spotify Logo"
+author: "Jawahar A S"
+tags: ["AI", "MCP", "project"]
+---
+
+import Figure from '../../components/mdx/Figure.astro';
+
+<Figure src="/assets/images/blog2/Spotify-Logo.jpg" alt="Spotify" caption="Spotify Logo" />
+
+> What if you could simply type "Play my chill playlist" — and your AI assistant actually controls Spotify to make it happen?
+
+## Motivation
+
+I've always loved Spotify — not just the music, but also the power it gives users to organize and personalize their music taste. But I've also got *huge playlists* that I never get around to organizing, and I thought: why not let an AI help me with that?
+
+That's when I came across **Model Context Protocol (MCP)** — an open protocol that lets LLMs securely talk to tools and services. I decided to build a **Spotify Agent** where an LLM could take natural language commands and control my Spotify account: play songs, create playlists, get track info, and more.
+
+## What is MCP?
+
+MCP (Model Context Protocol) is like **USB-C for LLMs** — a standard way for language models to interact with different tools, APIs, and data sources.
+
+<Figure src="/assets/images/blog2/mcp.png" alt="MCP" caption="Overview of how MCP works" />
+
+At the heart of this setup:
+
+- **MCP Hosts** (e.g., Claude, IDEs, or AI agents) send requests
+- **MCP Servers** expose capabilities (like controlling Spotify) using a standardized protocol
+- These servers can connect to **local** or **remote** services (like Spotify's Web API)
+
+This makes it easy to build agents that talk to complex services without writing glue code from scratch.
+
+## What the Agent Can Do
+
+The Spotify agent lets you control playback, manage playlists, and fetch song metadata — all by typing natural language commands into a web-based chat interface (built with Streamlit).
+
+Here are some examples of what you can do:
+
+- **"Pause the music"** → Pauses current playback
+- **"Play my chill playlist"** → Finds a playlist you created and starts playing it
+- **"Add Blinding Lights to Gym Mix"** → Searches and adds the song to the specified playlist
+- **"Create a playlist called Vibes"** → Creates a new playlist in your account
+- **"What's playing right now?"** → Displays current track info
+- **"Play Blinding Lights from my Workout playlist"** → Queues the playlist, adds the song again, and skips to it
+
+The agent also handles vague or ambiguous prompts by asking follow-up questions, confirming actions before execution, and prioritizing playlists owned by you.
+
+This gives the LLM a tool-augmented workflow that feels more like an intelligent assistant than just a chatbot.
+
+### Behind the scenes:
+
+1. User gives a prompt via a Streamlit chat interface
+2. LLM interprets intent → sends a call to the MCP server
+3. MCP Server communicates with Spotify's Web API
+4. Agent handles the request and returns a response
+
+## Setup Flow
+
+1. **Clone My Spotify Agent**
+
+   Start by cloning the main project repository and installing its dependencies.
+
+   ```bash
+   git clone https://github.com/juzztjawa/spotify-agent.git
+   cd spotify-agent
+   pip install -r requirements.txt
+   ```
+
+2. **Get Spotify API Keys**
+   - Set up a Spotify Developer app
+   - Redirect URI: `http://127.0.0.1:8080/callback`
+
+3. **Run the Spotify MCP Server (Only for First Time)**
+
+   From inside the cloned repo directory:
+
+   ```bash
+   git clone https://github.com/varunneal/spotify-mcp.git
+   cd spotify-mcp
+   npx @modelcontextprotocol/inspector uv --directory . run spotify-mcp
+   ```
+
+   - This starts the MCP Server Inspector UI.
+   - Click Connect, then go to Tools → List Tools.
+   - Choose any tool (e.g., SpotifyQueue)
+   - Pick an action (like get), type it, and hit Run Tool
+   - This triggers the Spotify authentication flow
+
+4. **Authenticate Your Spotify Account**
+   - A Spotify login/authorization window will appear.
+   - Grant access to your account
+   - Access tokens are saved locally for future use
+
+5. **Launch the Agent Interface**
+
+   ```bash
+   streamlit run spotify-agent-final.py
+   ```
+
+Handles vague input gracefully with follow-ups.
+
+## Challenges & Learnings
+
+### Authentication Confusion
+
+Getting MCP Inspector + Spotify OAuth to play nicely took the most time.
+
+### Connecting Tools to Agents
+
+Learned how to plug real-world tools into LLMs via a protocol instead of hardcoding APIs.
+
+### Secure Agent Design
+
+Gained experience in securely sandboxing agents while still enabling control over remote services.
+
+## Tech Stack
+
+- Model Context Protocol (MCP)
+- spotify-mcp-server
+- Streamlit
+- Agno Framework
+- Google Gemini API
+
+## GitHub
+
+[Spotify Agent GitHub Repo](https://github.com/juzztjawa/spotify-agent)
+
+## Preview
+
+<Figure src="/assets/images/blog2/Demo.png" alt="Demo" caption="Demo of the Spotify Agent" />
+
+## Conclusion
+
+This project started as a small idea — "what if my AI could control Spotify?" — but it quickly turned into a powerful demonstration of what's possible when you connect **LLMs with real-world tools** using open standards like **Model Context Protocol (MCP)**.
+
+It's no longer just about answering questions — it's about **taking action**. Whether it's organizing your playlists, fetching music facts, or just playing the right track at the right time — this agent turns natural language into real actions, making the LLM feel more useful than ever.
+
+And the best part? This architecture isn't limited to Spotify. MCP makes it easy to plug in other services and extend this approach to build broader **agentic systems** — music is just the beginning.

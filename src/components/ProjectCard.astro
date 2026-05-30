@@ -1,0 +1,86 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+  tags: string[];
+  slug: string;
+  index: number;
+}
+
+const { title, description, image, imageAlt, tags, slug, index } = Astro.props;
+
+const slugFile = slug.replace(/[^a-z0-9-]/gi, '-').toLowerCase();
+const ext = ['tsx', 'py', 'rs', 'go'][index % 4];
+const padded = String(index + 1).padStart(2, '0');
+---
+
+<a href={`/projects/${slug}`} class="ide-card group block w-full max-w-2xl" data-reveal>
+  <!-- Editor header: tab + close + index -->
+  <div class="ide-card-header">
+    <div class="ide-card-dots">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="flex items-center gap-1.5 ml-2 text-[#e6edf3]">
+      <svg class="w-3 h-3 text-[#56d4dd]" viewBox="0 0 16 16" fill="currentColor">
+        <path d="M2 2h12v12H2V2zm5.5 8.5v1l-1.5.7v-.9l.7-.3-.7-.3v-.9l1.5.7zm3.7-2.7L9.3 11.5h-.7L10.5 8h.7zm-7.4 0v.6h1v3.1h.7V8.4h1V7.8h-2.7z"/>
+      </svg>
+      <span>{slugFile}.{ext}</span>
+    </div>
+    <span class="flex-1"></span>
+    <span class="text-[#4a5563]">project / {padded}</span>
+  </div>
+
+  <!-- Image -->
+  <div class="relative overflow-hidden bg-[#0a0e12] aspect-[16/9]">
+    <img
+      src={image}
+      alt={imageAlt}
+      class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+      loading="lazy"
+    />
+    <div class="absolute inset-0 bg-gradient-to-t from-[#0b0f14] via-transparent to-transparent opacity-70"></div>
+    <!-- corner stamp -->
+    <div class="absolute top-3 right-3 px-2 py-1 bg-[#0b0f14]/80 backdrop-blur-sm border border-[#30363d] rounded text-[10px] text-[#ffb547] tracking-widest">
+      0x{padded}
+    </div>
+  </div>
+
+  <!-- Body -->
+  <div class="p-5 sm:p-6">
+    <!-- Inline code-comment description -->
+    <div class="text-[12px] text-[#7d8590] mb-2 italic">
+      /** {description} */
+    </div>
+
+    <h3 class="font-display text-xl sm:text-2xl text-[#e6edf3] group-hover:text-[#ffb547] transition-colors leading-tight mb-4">
+      <span class="text-[#7d8590]">const</span>
+      <span class="text-[#56d4dd]"> {slugFile.replace(/-([a-z])/g, (_, c) => c.toUpperCase())}</span>
+      <span class="text-[#7d8590]"> = </span>
+      <span class="text-[#ffa657]">"{title}"</span>
+    </h3>
+
+    <!-- Tags as syntax array -->
+    <div class="text-[12px] text-[#7d8590] mb-4">
+      <span class="text-[#7d8590]">tags: [</span>
+      <div class="inline-flex flex-wrap gap-1.5 mt-1 ml-1">
+        {tags.slice(0, 5).map((tag) => <span class="syntax-tag">{tag}</span>)}
+      </div>
+      <span class="text-[#7d8590]">]</span>
+    </div>
+
+    <div class="flex items-center justify-between pt-3 border-t border-[#21262d]">
+      <span class="text-[11px] text-[#7d8590] flex items-center gap-1.5">
+        <span class="w-1.5 h-1.5 rounded-full bg-[#3fb950] animate-pulse"></span>
+        ready
+      </span>
+      <span class="inline-flex items-center gap-1.5 text-[12px] text-[#ffb547] group-hover:gap-3 transition-all">
+        ./run
+        <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+        </svg>
+      </span>
+    </div>
+  </div>
+</a>

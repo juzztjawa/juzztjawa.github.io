@@ -1,0 +1,31 @@
+---
+interface Props {
+  title: string;
+  highlight?: string;
+  viewAllHref?: string;
+  section?: string;
+}
+
+const { title, highlight, viewAllHref, section } = Astro.props;
+---
+
+<div class="mb-10 flex items-end justify-between flex-wrap gap-3" data-reveal>
+  <div>
+    {section && (
+      <div class="text-[11px] text-[#7d8590] tracking-widest uppercase mb-1">// {section}</div>
+    )}
+    <h2 class="font-display text-3xl sm:text-4xl text-[#e6edf3] tracking-tight lowercase">
+      <span class="text-[#7d8590]">&lt;</span>{title}
+      {highlight && <span class="text-[#ffb547]">.{highlight}</span>}
+      <span class="text-[#7d8590]"> /&gt;</span>
+    </h2>
+  </div>
+  {viewAllHref && (
+    <a href={viewAllHref} class="text-[12px] text-[#7d8590] hover:text-[#ffb547] transition-colors inline-flex items-center gap-2">
+      <span class="text-[#3fb950]">$</span> ls --all
+      <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+      </svg>
+    </a>
+  )}
+</div>

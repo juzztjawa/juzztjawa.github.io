@@ -1,0 +1,113 @@
+---
+import PageLayout from './PageLayout.astro';
+
+interface Props {
+  frontmatter: {
+    title: string;
+    description: string;
+    pubDate: string;
+    heroImage: string;
+    heroAlt: string;
+    tags: string[];
+    github?: string;
+    demo?: string;
+  };
+}
+
+const { frontmatter } = Astro.props;
+const date = new Date(frontmatter.pubDate).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+const isoDate = new Date(frontmatter.pubDate).toISOString().split('T')[0];
+const slugLike = frontmatter.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+---
+
+<PageLayout title={frontmatter.title} description={frontmatter.description} image={frontmatter.heroImage}>
+  <article class="max-w-3xl mx-auto">
+    <!-- Back link -->
+    <a href="/projects" class="inline-flex items-center gap-2 text-[12px] text-[#7d8590] hover:text-[#ffb547] transition-colors mb-10 font-mono">
+      <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+      </svg>
+      cd ../projects
+    </a>
+
+    <!-- Filename / kind -->
+    <div class="text-[11px] text-[#7d8590] font-mono mb-3 flex items-center gap-2">
+      <svg class="w-3 h-3 text-[#56d4dd]" viewBox="0 0 16 16" fill="currentColor">
+        <path d="M2 2h12v12H2V2zm5.5 8.5v1l-1.5.7v-.9l.7-.3-.7-.3v-.9l1.5.7zm3.7-2.7L9.3 11.5h-.7L10.5 8h.7zm-7.4 0v.6h1v3.1h.7V8.4h1V7.8h-2.7z"/>
+      </svg>
+      <span class="text-[#56d4dd]">{slugLike}.tsx</span>
+      <span class="text-[#4a5563]">·</span>
+      <span>project</span>
+    </div>
+
+    <!-- TITLE: dominant -->
+    <h1 class="font-display text-[36px] sm:text-5xl lg:text-6xl font-bold text-[#e6edf3] tracking-tight leading-[1.05] mb-5">
+      {frontmatter.title}
+    </h1>
+
+    <!-- Description -->
+    <p class="text-[16px] sm:text-[17px] text-[#b1bac4] leading-relaxed mb-6 max-w-2xl">
+      {frontmatter.description}
+    </p>
+
+    <!-- Metadata strip + tags -->
+    <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-[12px] text-[#7d8590] font-mono pb-5 border-b border-[#21262d]">
+      <time datetime={frontmatter.pubDate} class="text-[#e6edf3]">{date}</time>
+      <span class="text-[#30363d]">·</span>
+      <span class="inline-flex flex-wrap items-center gap-1.5">
+        {frontmatter.tags.map((tag) => <span class="syntax-tag">{tag}</span>)}
+      </span>
+    </div>
+
+    <!-- Action buttons -->
+    {(frontmatter.github || frontmatter.demo) && (
+      <div class="flex gap-3 flex-wrap mt-6 mb-10">
+        {frontmatter.github && (
+          <a href={frontmatter.github} target="_blank" rel="noopener noreferrer" class="btn-term">
+            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+            git clone source
+          </a>
+        )}
+        {frontmatter.demo && (
+          <a href={frontmatter.demo} target="_blank" rel="noopener noreferrer" class="btn-term-filled">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+            </svg>
+            ./run demo
+          </a>
+        )}
+      </div>
+    )}
+
+    <!-- Hero image AFTER identity -->
+    {frontmatter.heroImage && (
+      <div class={`rounded-lg overflow-hidden mb-12 border border-[#21262d] bg-[#0a0e12] ${!(frontmatter.github || frontmatter.demo) ? 'mt-10' : ''}`}>
+        <img
+          src={frontmatter.heroImage}
+          alt={frontmatter.heroAlt}
+          class="w-full max-h-[420px] object-cover"
+        />
+      </div>
+    )}
+
+    <!-- Content -->
+    <div class="prose prose-lg prose-custom max-w-none">
+      <slot />
+    </div>
+
+    <!-- Footer nav -->
+    <div class="mt-16 pt-6 border-t border-[#21262d] flex items-center justify-between text-[12px] font-mono">
+      <a href="/projects" class="text-[#7d8590] hover:text-[#ffb547] transition-colors inline-flex items-center gap-1.5">
+        <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+        all projects
+      </a>
+      <span class="text-[#4a5563]">EOF</span>
+    </div>
+  </article>
+</PageLayout>

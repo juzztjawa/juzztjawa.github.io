@@ -1,0 +1,33 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import BlogCard from '../../components/BlogCard.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<PageLayout title="Blog · Jawahar A S" description="Writing by Jawahar A S — AI, ML, software engineering notes.">
+  <SectionHeading title="writing" highlight="all" section="dir/blog" />
+
+  {posts.length === 0 ? (
+    <p class="text-[#7d8590] font-mono text-sm">// no posts yet — drafting in progress</p>
+  ) : (
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {posts.map((post, i) => (
+        <BlogCard
+          title={post.data.title}
+          description={post.data.description}
+          image={post.data.heroImage}
+          imageAlt={post.data.heroAlt}
+          date={post.data.pubDate}
+          tags={post.data.tags}
+          slug={post.id}
+          index={i}
+        />
+      ))}
+    </div>
+  )}
+</PageLayout>
