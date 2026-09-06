@@ -1,0 +1,81 @@
+---
+title: "Bessemer Tech Catalyst: We Built Something, Just Not Enough"
+description: "We walked into Bessemer Tech Catalyst, built something in the time we had — and it still wasn't enough. Here's the honest breakdown of why, and what changes before the next one."
+pubDate: 2026-09-06
+heroImage: "/assets/images/blog3/hero.jpg"
+heroAlt: "Bessemer Tech Catalyst hackathon"
+author: "Jawahar A S"
+tags: ["hackathon", "reflection", "AI"]
+---
+
+**We built something. It just wasn't enough.** No award, no standout demo — just a working-ish agent that fell well short of what the team could have produced. I'm writing this down while it's still raw, because the next one — Forge the Future, Sep 18–19, with Jai Krishna — needs to look different.
+
+---
+
+## What actually happened
+
+I went in under-slept. We had ample lead time to prepare — the problem statement wasn't the issue. What got me was the day before: a five-hour train journey ate into the night's sleep, and it showed up as low energy on day one.
+
+Here's the actual build flow: the problem statement dropped 9am Friday, we discussed it as a team, and got moving — but not much came out of that discussion. I put together the full architecture that same day and split it into individual agents, one per teammate, so everyone had a clear, bounded piece to build before the event. **None of us ended up building our agent — myself included.** Part of that was mis-planning: handing someone a piece and a deadline isn't the same as a checkpoint that forces it to actually happen. And part of it was on me personally — I hadn't actually switched into "hackathon mode." Critical work stuff was sitting on the same day, and I stayed in that headspace instead of building.
+
+By the time the event started Saturday with nothing built, the team defaulted to letting one teammate's model — GPT-6 Astra, OpenAI's latest — drive the entire build live and unsupervised, including the architecture decisions. Nobody was steering it with real technical judgment. When it produced an architecture missing a piece I'd have considered non-negotiable, the response was: "if the AI gave it, it's probably right, it knows more than us." Everyone else deferred instead of pushing back.
+
+That's the gap between "we built something" and "we built something good." Nobody but me was actually interrogating what was being assembled, decisions got made by an LLM nobody was steering, and I ended up sidelined for a lot of it — partly because there was no real task left once "the AI is handling it," and partly because a power cut killed my laptop battery mid-event and there was nothing to do about it in that stretch.
+
+Also on me: I was tardy on Friday, too — I sat in a 2-3 hour client call for work that, in hindsight, wasn't going to move the needle either way. The bigger problems (the unfinished agents, the mode I was still in) were already there before that call. But losing that Friday time meant losing the one lever that might have closed the gap: showing up Saturday with a stronger foundation already in hand, instead of still figuring out the plan.
+
+---
+
+## Lesson 1 — Protect sleep before a hackathon, non-negotiably
+
+I went in on about five hours of fragmented sleep from train travel the day before. Hackathons already tax your attention and judgment; starting one already depleted just compounds every other mistake you make that day — tardiness, tolerance for a bad plan, not pushing back on decisions you should push back on.
+
+**Next time: no travel the night before, or travel early enough to get a full night in before day one.**
+
+## Lesson 2 — Team composition is the single biggest variable, and it's controllable
+
+The harshest lesson of this hackathon: **skill overlap on paper — "we cover different layers of the stack" — does not mean shared understanding of AI.** Every teammate had a genuinely different mental model of what "using AI well" means. And the whole team treated "the AI chose it" as a stopping point for reasoning rather than a starting point for review.
+
+Working with people who don't share your bar for what "good" looks like isn't just friction — under hackathon time pressure it means the person who *does* have the bar either fights for every decision or watches the plan drift. Neither worked here.
+
+**Takeaway:** prioritize teaming with people who think about AI the way I do — ideally other AI engineers, or people with a track record of treating AI output as a draft to interrogate, not an oracle to defer to. Hard to guarantee at an on-site-matched hackathon, but it's the #1 filter to apply whenever there's any choice in team formation.
+
+## Lesson 3 — Build the whole thing myself first, then hand off for fine-tuning
+
+The plan going in was "AI person(s) own the core, split modules, integrate." The theory was depth + breadth coverage from parallel builders. In practice, with a team that didn't share my technical judgment, that became a liability the moment nobody was reviewing the AI-generated architecture.
+
+**The better model, given I was the only AI engineer in the room:** build the full working solution solo — Claude Code makes this realistic solo, in a way it wasn't a year ago — then hand it to the team to fine-tune, extend, or add polish on top of something I already trust the core of. That keeps control over the parts that actually determine whether the thing works, and still gives teammates real, bounded work. Distributed ownership only makes sense when everyone building has comparable judgment about the thing being built.
+
+## Lesson 4 — Logistics risk is still risk
+
+Laptop battery dying mid-event during a power cut, with no backup plan, turned into dead time with literally nothing to do. Small thing, but it compounded an already-bad day.
+
+**Next hackathon: charged power bank, non-negotiable checklist item.**
+
+## Lesson 5 — Work split has to be forced, not assumed
+
+I did give this an explicit split — full architecture drawn up Friday, one agent assigned per person. It still failed: nobody, including me, actually delivered their piece before the event started. An assignment without a checkpoint is just a hope. Next time, that split needs a hard intermediate checkpoint — something built and shown, not just claimed — before event day, not a shared blob of work that one dominant model can silently absorb once nothing shows up.
+
+## Lesson 6 — Get into "hackathon mode" before day one, deliberately
+
+The real reason I didn't finish my own assigned agent on Friday wasn't a lack of a plan — it was that I hadn't mentally left work mode. Critical office work was sitting on the same day, and I stayed in that headspace instead of switching into build mode. A good architecture split doesn't execute itself — it needed me to actually show up for it, and I didn't.
+
+**Next time:** treat the mode switch as a deliberate step, not something that happens automatically once the statement drops. Block the prep day fully, or don't count on it at all and plan the build around event-day hours only.
+
+---
+
+## The trust question
+
+I trusted the team's judgment on process and tooling decisions instead of pushing my own, and ended up feeling like a spectator on my own hackathon. The lesson isn't "never trust teammates" — it's that **trust has to be earned by demonstrated judgment, not assumed from a team roster.**
+
+I love these hackathons and competitions and I'm not stopping. I just need better filtering on who's in the room — fewer, higher-trust collaborators over more, unverified ones.
+
+---
+
+## Next up
+
+**Forge the Future — Sep 18–19, 2026, with Jai Krishna.** Applying Lesson 3 directly: going in with a working core built solo where possible, treating Jai Krishna as the high-trust collaborator to extend it, not repeating the sleep mistake, and actually switching into hackathon mode on the prep day instead of assuming it'll happen — block the time, or don't count on it.
+
+Let's see how this one goes.
+
+– Jawahar

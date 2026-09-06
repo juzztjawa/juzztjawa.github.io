@@ -19,10 +19,7 @@ const padded = String(index + 1).padStart(2, '0');
 <a href={`/projects/${slug}`} class="ide-card group block w-full max-w-2xl" data-reveal>
   <!-- Editor header: tab + close + index -->
   <div class="ide-card-header">
-    <div class="ide-card-dots">
-      <span></span><span></span><span></span>
-    </div>
-    <div class="flex items-center gap-1.5 ml-2 text-[#e6edf3]">
+    <div class="flex items-center gap-1.5 text-[#e6edf3]">
       <svg class="w-3 h-3 text-[#56d4dd]" viewBox="0 0 16 16" fill="currentColor">
         <path d="M2 2h12v12H2V2zm5.5 8.5v1l-1.5.7v-.9l.7-.3-.7-.3v-.9l1.5.7zm3.7-2.7L9.3 11.5h-.7L10.5 8h.7zm-7.4 0v.6h1v3.1h.7V8.4h1V7.8h-2.7z"/>
       </svg>
@@ -41,10 +38,6 @@ const padded = String(index + 1).padStart(2, '0');
       loading="lazy"
     />
     <div class="absolute inset-0 bg-gradient-to-t from-[#0b0f14] via-transparent to-transparent opacity-70"></div>
-    <!-- corner stamp -->
-    <div class="absolute top-3 right-3 px-2 py-1 bg-[#0b0f14]/80 backdrop-blur-sm border border-[#30363d] rounded text-[10px] text-[#ffb547] tracking-widest">
-      0x{padded}
-    </div>
   </div>
 
   <!-- Body -->

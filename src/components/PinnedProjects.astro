@@ -1,5 +1,6 @@
 ---
 import ProjectCard from './ProjectCard.astro';
+import SectionHeading from './SectionHeading.astro';
 import { getCollection } from 'astro:content';
 
 const projects = (await getCollection('projects'))
@@ -7,40 +8,21 @@ const projects = (await getCollection('projects'))
   .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
 ---
 
-<section id="projects" class="pin-section" data-section="projects">
-  <!-- The sticky backdrop (giant headline) -->
-  <div class="pin-backdrop">
-    <div class="pin-backdrop-label">
-      <span class="punc">//</span> ~/<span class="key">projects</span> <span class="punc">·</span>
-      <span class="punc">render(</span><span class="str">"all"</span><span class="punc">)</span>
-    </div>
-    <div class="relative">
-      <h2 class="pin-title">projects</h2>
-      <div class="hidden sm:block absolute -top-4 -right-6 text-[10px] text-[#4a5563] tracking-[0.3em] rotate-90 origin-right">
-        SECTION · 03
-      </div>
-    </div>
-    <div class="mt-6 text-[12px] text-[#7d8590] max-w-md">
-      <span class="text-[#3fb950]">$</span> ls projects/ <span class="text-[#7d8590]">|</span> wc -l
-      <span class="ml-2 text-[#ffb547]">→ {projects.length}</span>
-    </div>
-  </div>
+<section id="projects" class="relative px-4 sm:px-8 max-w-5xl mx-auto py-20" data-section="projects">
+  <SectionHeading title="projects" highlight="all" section="section 03 · dir/projects" viewAllHref="/projects" />
 
-  <!-- The scrolling stage that floats above -->
-  <div class="pin-stage">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
     {
       projects.map((project, i) => (
-        <div class="pin-card-wrap">
-          <ProjectCard
-            title={project.data.title}
-            description={project.data.description}
-            image={project.data.heroImage}
-            imageAlt={project.data.heroAlt}
-            tags={project.data.tags}
-            slug={project.id}
-            index={i}
-          />
-        </div>
+        <ProjectCard
+          title={project.data.title}
+          description={project.data.description}
+          image={project.data.heroImage}
+          imageAlt={project.data.heroAlt}
+          tags={project.data.tags}
+          slug={project.id}
+          index={i}
+        />
       ))
     }
   </div>
